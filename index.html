@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body{
+    background-color:#111;
+}
+#main {
+    width:450px;
+    margin:40px auto;
+    text-align: center;
+    height: 700px;
+    color:black;
+    border-radius: 15px;
+    background: white;
+}
+h1{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+ul{
+    margin-top:50px;
+    padding-left: 0;
+}
+
+li{
+    list-style:none;
+    border:2px solid #778899;
+    width: 70%;
+    height: 40px;
+    margin: 10px auto;
+    text-align: left;
+}
+
+label{
+    margin: 0 auto;
+    vertical-align: middle;
+    height: 100px;
+    line-height: 40px;
+    font-size: 18px;
+    font-family: sans-serif;
+    
+}
+
+#check{
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border: 2px solid #b5c5dd;
+    position: relative;
+    outline: 0;
+    border-radius: 20%;
+}
+
+input[type="checkbox"]:checked+label{
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.8);
+}
+.content{
+    width: 60%;
+    margin: auto;
+}
+#input{
+    width: 70%;
+    height: 40px;
+    font-size: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border:2px solid #b5c5dd;
+    border-radius: 10px;
+    outline: none;
+}
+
+#add{
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    width: 40px;
+    background-color: #1E90FF;
+    color: white;
+    opacity: 0.9;
+    cursor: pointer;
+    outline:none;
+}
+#add:hover{
+    opacity: 1;
+}
+#remove{
+    margin-top: 5px;
+    float: right;
+    border: none;
+    height: 30px;
+    width: 40px;
+    border-radius: 20px;
+    background-color:white;
+    color: red;
+    cursor: pointer;
+    outline:none;
+}
+.listitem{
+    opacity:1px;
+    border-radius:10px;
+}
+p{
+    font-size: 20px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="content">
+            <h1>TODO LIST</h1>
+            <input type="text" id="input">
+            <button type="button" id="add" onclick="posttext();showtext()"><i class="fa fa-plus"></i></button>
+            <p id="empty"></p>
+        </div>
+        <ul id="list">
+            <!--<li class="listitem">
+                <input type="checkbox" id="check">
+                <label id="todoitem"></label>
+                <BUTTON type="button" id="remove" ><i class="fa fa-minus-circle" aria-hidden="true"></i></BUTTON>
+            </li>-->
+        </ul>
+    </div>
+    <script>
+        function posttext(){
+        var text = document.getElementById("input").value
+        if(text === ""){
+            document.getElementById('empty').innerHTML = "Please enter a TODO task!"
+        }else{
+            document.getElementById('empty').innerHTML = ""
+            localStorage.setItem(text,"todo");
+            document.getElementById("input").value = "";
+        }
+    }
+    function showtext(){
+        var listitems = Object.keys(localStorage);
+        document.getElementById('list').innerHTML=''
+        for(var a = 0; a < listitems.length; a++ ){
+            document.getElementById('list').innerHTML+=`<li class='listitem'><input type='checkbox' id='check'><label id='todoitem'>${listitems[a]}</label><BUTTON type="button" id="remove" onclick='localStorage.removeItem("${listitems[a]}");showtext();'><i class="fa fa-minus-circle" aria-hidden="true"></i></BUTTON></li>`;
+            }
+    }
+    showtext()
+    </script>
+</body>
+</html>
