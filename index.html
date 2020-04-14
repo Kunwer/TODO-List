@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Todo List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body{
-    background-color:#111;
+    body{
+        background-color:#111;
     }
     #main {
         width:450px;
@@ -31,8 +31,9 @@
     li{
         list-style:none;
         border:2px solid #778899;
-        width: 70%;
-        height: 40px;
+        width: 80%;
+        height: auto;
+        min-height: 40px;
         margin: 10px auto;
         text-align: left;
     }
@@ -44,7 +45,7 @@
         line-height: 40px;
         font-size: 18px;
         font-family: sans-serif;
-
+        
     }
 
     #check{
@@ -75,6 +76,7 @@
         border:2px solid #b5c5dd;
         border-radius: 10px;
         outline: none;
+        
     }
 
     #add{
@@ -97,11 +99,12 @@
         border: none;
         height: 30px;
         width: 40px;
-        border-radius: 20px;
+        /*border-radius: 20px;*/
         background-color:white;
         color: red;
         cursor: pointer;
         outline:none;
+        margin-right: 1px;
     }
     .listitem{
         opacity:1px;
@@ -143,12 +146,35 @@
     }
     function showtext(){
         var listitems = Object.keys(localStorage);
-        document.getElementById('list').innerHTML=''
-        for(var a = 0; a < listitems.length; a++ ){
-            document.getElementById('list').innerHTML+=`<li class='listitem'><input type='checkbox' id='check'><label id='todoitem'>${listitems[a]}</label><BUTTON type="button" id="remove" onclick='localStorage.removeItem("${listitems[a]}");showtext();'><i class="fa fa-minus-circle" aria-hidden="true"></i></BUTTON></li>`;
+        document.getElementById('list').innerHTML='';
+        for(let a = 0; a < listitems.length; a++ ){
+            //document.getElementById('list').innerHTML+=`<li class='listitem'><input type='checkbox' id='check'><label id='todoitem'>${listitems[a]}</label><BUTTON type="button" id="remove" onclick='localStorage.removeItem("${listitems[a]}");showtext();'><i class="fa fa-minus-circle" aria-hidden="true"></i></BUTTON></li>`;
+            let li = document.createElement('li');
+            li.setAttribute('id','listitem');
+            let box = document.createElement('input');
+            box.type="checkbox";
+            box.setAttribute('id','check');
+            let label = document.createElement('label');
+            label.id="todoitem";
+            var x= document.createTextNode(listitems[a]);
+            label.appendChild(x);
+            let del = document.createElement('button');
+            del.type="button";
+            del.id = "remove"
+            del.onclick=()=>{
+                localStorage.removeItem(listitems[a]);
+                showtext();
+            };
+            i = document.createElement('i');
+            i.setAttribute("class","fa fa-minus-circle");
+            del.appendChild(i);
+            li.appendChild(box);
+            li.appendChild(label);
+            li.appendChild(del);
+            document.getElementById('list').appendChild(li);
             }
     }
-    showtext()
+    showtext();
     </script>
 </body>
 </html>
